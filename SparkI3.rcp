@@ -1,0 +1,119 @@
+[print]
+name = SparkI3
+defaultQuality = GYAMjLRM1PvUnNbOma3fzCHVyyJMIhSN
+travelSpeedMin = 40
+travelSpeedMax = 40
+firstLayerSpeedMin = 15
+firstLayerSpeedMax = 20
+infillSpeedMin = 25
+infillSpeedMax = 35
+skinSpeedMin = 25
+skinSpeedMax = 30
+infillType = 0
+innerPerimeterMin = 25
+innerPerimeterMax = 35
+outerPerimeterMin = 25
+outerPerimeterMax = 35
+printSpeedMin = 30
+printSpeedMax = 40
+nozzleDiameter = 0
+gcodeFlavour = 0
+retractionCombing = True
+combing = 1
+multiVolumeOverlap = 0
+cutOffObjectBottom = 0
+shellThickness = 0.8
+infillTopBottomThickness = 0.6
+infillDensityPercent = 20
+supportType = 1
+platformAdhesion = 0
+dualExtrusion = 0
+wipeAndPrimeTower = False
+oozeShield = False
+enableRetraction = True
+retractionSpeed = 30
+retractionDistance = 4
+multiExtruderSwitchAmount = 16
+startGCode = """
+; Default start code
+M117 Homing
+G28 ; Home extruder
+; G32 S0 ; Auto bed calibration for REPETIER ONLY !!!
+M117 Autoleveling
+G29 ; Autolevel for Marlin !!!
+G4 S1 ; Wait 1 sec
+; Wait for extruder to reach temperature
+{IF_EXT0}M109 T0 S{TEMP0}
+G92 Z1.98 ; Z clear (was 0.75)
+G90 ; Absolute positioning
+G1 Z5 F{Z_TRAVEL_SPEED}; Lift to Z5
+M107 ; Turn off fan
+M82 ; Extruder in absolute mode
+{IF_BED}M190 S{BED} ; Heat bed
+G1 X100 Y100 F{TRAVEL_SPEED}
+M82 ; Extruder in absolute mode
+G92 E0 ; Reset extruder position
+M117 Printing ...
+G1 E30 ; Extrude 30mm before print
+G92 E0 ; Reset extruder position
+"""
+endGCode = """
+; Default end code
+;G1 X0 Y0 Z130 ; Get extruder out of way. Uncomment to use!
+M107 ; Turn off fan
+; Disable all extruder
+G91 ; Relative positioning
+{IF_EXT0}T0
+{IF_EXT0}G1 E-2 ; Reduce filament pressure
+M104 T0 S0
+G90 ; Absolute positioning
+G92 E0 ; Reset extruder position
+M140 S0 ; Disable heated bed
+G0 X150 Y140 F2000 ; Move bed to abs X150 Y100 mm
+M84 ; Turn steppers off
+M117 Done
+"""
+preSwitchExtruderCode = 
+postSwitchExtruderCode = 
+wipeAndPrimeTowerVolume = 15
+retractionMinimumTravel = 1.25
+minimumExtrusionBeforeRetract = 0.02
+zhop = 0.1
+skirtLineCount = 3
+skirtDistance = 2
+skirtMinimumLength = 150
+solidInfillTop = True
+solidInfillBottom = True
+infillOverlapPercent = 15
+supportStructureType = 0
+supportOverhang = 50
+supportFillPercent = 25
+supportDistanceXY = 0.75
+supportDistanceZ = 0.15
+supportExtruder = -1
+spiralizeOuterContour = False
+brimWidth = 3
+raftExtraMargin = 1
+raftLineSpacing = 1
+raftBaseThickness = 0.3
+raftBaseWidth = 0.7
+raftInterfaceThickness = 0.2
+raftInterfaceLineWidth = 0.2
+raftAirGap = 0
+raftAirGapLayer0 = 0.14
+raftSurfaceLayer = 1
+fixCombineEverythingA = True
+fixCombineEverythingB = False
+fixKeepOpenFaces = False
+fixExtensiveStitching = False
+fanFullAtHeight = 0.5
+perimeterBeforeInfill = True
+minimumSpeed = 10
+coolHeadLift = False
+numQuality = 1
+[quality_0]
+name = 0.2 mm
+signature = GYAMjLRM1PvUnNbOma3fzCHVyyJMIhSN
+layerHeight = 0.2
+layer0widthPercent = 90
+firstLayerHeight = 0.2
