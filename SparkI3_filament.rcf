@@ -1,6 +1,6 @@
 [filament]
 name = SparkI3_filament
-diameter = 1.68
+diameter = 1.72
 multiplierPercent = 100
 printingTemperature = 200
 enableCooling = True
